@@ -10,7 +10,7 @@ We all know Excel sheets hold useful information, but it can be hard to read the
 We will read some NBA statistics from Excel sheets in Python using the Openpyxl library. How will we know which statistics to look for and return? Incoming SMS is two players and a type of NBA statistic, and then the outgoing SMS looks up the statistics of the corresponding players.
 
 <h3>Data</h3>
-The data we use is about specific NBA players from this past season from <a href = "stats.nba.com/players" target="_blank">stats.nba.com/players</a>.
+The data we use is about specific NBA players from <a href = "stats.nba.com/players"target="_blank">this past season</a>.
 There, you can specify which season, season type (playoffs versus regular season), data type (game average versus total for the season), which dates, and more. Fun, right? 
 
 No Microsoft Excel? No problem! You can copy and paste the data directly into Google Sheets and export it as a .xlsx file. Here is an excerpt from the the Excel sheet (lots more data not shown to the right and below.) 
@@ -19,8 +19,7 @@ No Microsoft Excel? No problem! You can copy and paste the data directly into Go
 Some statistics above include age, games played, wins, losses, minutes, points, field goal percentage, three-point shot percentage, and more.
 
 <h3>Setup your Developer Environment</h3>
-Make sure your Python and Flask development environment is set up, like this. If you don’t have a Twilio number to send and receive SMS messages, let’s do that here.
-
+Make sure your Python and Flask development environment is set up, like <a href = "https://www.twilio.com/docs/guides/how-to-set-up-your-python-and-flask-development-environment#create-a-simple-flask-application">this</a>. If you don’t have a Twilio number to send and receive SMS messages, let’s do that <a href = "https://www.twilio.com/console">here</a>.
 
 
 Once your environment is up and running, run the following command in the directory your python file will live in. 
