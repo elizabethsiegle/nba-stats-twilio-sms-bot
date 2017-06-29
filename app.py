@@ -2,19 +2,11 @@ from flask import Flask, request
 from twilio.twiml.messaging_response import MessagingResponse
 from openpyxl import load_workbook, Workbook 
 
-
 app = Flask(__name__)
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/', methods = ['GET', 'POST'])
 
-def parseExcel():
-	excelfile = 'nba_stats_two_sheets.xlsx'
-	typomsg = "send first and last name(s), stat, or check for typos!"
-	statmsg = "Type 1-2 players' names(first + last, players separated by a space), then a stat(GP,W,L,MIN,PTS,FG%,3P%,FT%,REB,AST,STL,BLK)"
-	msg = request.form['Body'].lower() #check that it's lowercase
-	list_of_players = []
-	list_of_stats = []
+def parse_data_into_dict():
 	#make dictionary: key = stat, value=column of Excel spreadsheet (column B is avg minutes played)
-	
 	stat_dict = { 
 		"age":"B", "gp":"C","w":"D","l":"E","min":"F","pts":"G",
 		"fgm":"H","fga":"I","fg%":"J",
@@ -22,14 +14,17 @@ def parseExcel():
 		"ft%":"O","oreb":"P","dreb":"Q","reb":"R","ast":"S","tov":"T", "stl": "U",
 		"blk": "V", "pf": "W", "dd2": "X", "td3": "Y"
 	}
-	wb = load_workbook(excelfile)
+	excel_file = 'nba_stats_one_sheet.xlsx'
+	typo_msg = "send first and last name(s), stat, or check for typos!"
+	stat_msg = "Type 1-2 players' names(first + last, players separated by a space), then a stat(GP,W,L,MIN,PTS,FG%,3P%,FT%,REB,AST,STL,BLK)"
+	msg = request.form['Body'].lower()
+	list_of_stats = []
+	list_of_players = []
+	wb = load_workbook(excel_file)
 	reg_season = True # set boolean, will change depending on user input
 	if msg == "play":
 		ret = MessagingResponse().message("type \'a\' for regular season or \'b\' for playoffs")
-	elif msg == 'a':
-		ret = MessagingResponse().message(statmsg)
-	elif msg == 'b':
-		reg_season = False
+	elif msg == 'a' or msg == 'b':
 		ret = MessagingResponse().message(statmsg)
 	else:
 		if reg_season: # playoffs or regular season, take your pick!!
@@ -70,7 +65,7 @@ def parseExcel():
 				else:
 					ret = MessagingResponse().message(player2 + " 's total regular season " + stat + " " + str(player_stat_map[player2]) + ", higher than " + player1 + "\'s " + str(player_stat_map[player1]))
 			else: #check
-				ret = MessagingResponse().message("check both players' names (first and last!)")
+				ret = MessagingResponse().message(typomsg)
 		else: #idk how many players
 			ret = MessagingResponse().message(typomsg)
 	return str(ret)
